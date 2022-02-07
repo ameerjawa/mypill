@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/appointments.dart';
 
@@ -232,10 +233,7 @@ class _AddAppointmentState extends State<AddAppointment> {
                                             : ""
                                   };
 
-                                  await FirebaseFirestore.instance
-                                      .collection("appoinments")
-                                      .doc()
-                                      .set(data);
+                                  await FireAuth.addAppointmentAsUser(data);
                                   widget.userAppointments.add(data);
 
                                   Navigator.of(context).pushReplacement(

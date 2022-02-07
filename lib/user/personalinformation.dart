@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/changeusername.dart';
 import 'package:mypill/user/enterdoctorname.dart';
@@ -161,6 +162,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                 firstDate: DateTime(1900),
                                 lastDate: DateTime(2100));
                             if (date != null) {
+                              await FireAuth.updateBirthDate(
+                                  widget.userData["docId"], date);
                               FirebaseFirestore.instance
                                   .collection("Users")
                                   .doc(widget.userData["docId"])
@@ -189,8 +192,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                         ),
                         InkWell(
                           onTap: () => {
-                            Navigator.of(context).pushReplacement(
-                                ScaleRoute(page: EnterDoctorName(userData: widget.userData)))
+                            Navigator.of(context).pushReplacement(ScaleRoute(
+                                page:
+                                    EnterDoctorName(userData: widget.userData)))
                           },
                           child: Container(
                             height: 65,
@@ -221,5 +225,4 @@ class _PersonalInformationState extends State<PersonalInformation> {
       ),
     );
   }
- 
 }

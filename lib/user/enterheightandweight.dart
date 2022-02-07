@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/personalinformation.dart';
 
 class EnterHeightAndWeight extends StatefulWidget {
   final userData;
-  const EnterHeightAndWeight({Key? key,this.userData}) : super(key: key);
+  const EnterHeightAndWeight({Key? key, this.userData}) : super(key: key);
 
   @override
   _EnterHeightAndWeightState createState() => _EnterHeightAndWeightState();
@@ -14,7 +15,7 @@ class EnterHeightAndWeight extends StatefulWidget {
 class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
   final _formKey = GlobalKey<FormState>();
   var heightController = TextEditingController();
-    var weightController = TextEditingController();
+  var weightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,10 @@ class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
                 children: [
                   IconButton(
                       onPressed: () => {
-                            Navigator.of(context).pushReplacement(
-                                ScaleRoute(page: PersonalInformation(userData: widget.userData,)))
+                            Navigator.of(context).pushReplacement(ScaleRoute(
+                                page: PersonalInformation(
+                              userData: widget.userData,
+                            )))
                           },
                       icon: Icon(
                         Icons.arrow_back,
@@ -105,19 +108,20 @@ class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
                             alignment: Alignment.bottomRight,
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.blueGrey)),
-                              onPressed: () => {
-                                 if (_formKey.currentState!.validate())
-                                  {
-                                    FirebaseFirestore.instance
-                                        .collection("Users")
-                                        .doc(widget.userData["docId"])
-                                        .update({"userHeight": heightController.text,"userWeight":weightController.text}),
-                                      Navigator.of(context).pushReplacement(
-                                    ScaleRoute(page: PersonalInformation(userData: widget.userData)))
-                                  }
-                             
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.blueGrey)),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await FireAuth.UpdateHeightAndWidthByUser(
+                                      widget.userData["docId"],
+                                      heightController.text,
+                                      weightController.text);
+
+                                  Navigator.of(context).pushReplacement(
+                                      ScaleRoute(
+                                          page: PersonalInformation(
+                                              userData: widget.userData)));
+                                }
                               },
                               child: Text("Done"),
                             ),

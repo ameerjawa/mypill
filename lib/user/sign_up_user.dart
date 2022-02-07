@@ -8,7 +8,6 @@ import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/user/sign_in_user.dart';
 import 'dart:math';
 
-
 import 'main_page.dart';
 
 class SignUpAsUser extends StatefulWidget {
@@ -175,16 +174,18 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                           onPressed: () async {
                             if (passwordController.text ==
                                 passwordVerifyController.text) {
-                              var usersImages = ["https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                              ,"https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo="
-                              ,"https://upload.wikimedia.org/wikipedia/en/2/2f/Profile_image_Nadia_Lim_chef_2014.jpg"
-                              ,"https://image.shutterstock.com/image-photo/young-adult-profile-picture-red-600w-1655747050.jpg"
-                              ,"https://image.shutterstock.com/image-photo/portrait-smiling-red-haired-millennial-600w-1194497251.jpg"
-                              ,"https://image.shutterstock.com/image-photo/young-hispanic-latino-businessman-walking-600w-1152383948.jpg"];
+                              var usersImages = [
+                                "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                                "https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo=",
+                                "https://upload.wikimedia.org/wikipedia/en/2/2f/Profile_image_Nadia_Lim_chef_2014.jpg",
+                                "https://image.shutterstock.com/image-photo/young-adult-profile-picture-red-600w-1655747050.jpg",
+                                "https://image.shutterstock.com/image-photo/portrait-smiling-red-haired-millennial-600w-1194497251.jpg",
+                                "https://image.shutterstock.com/image-photo/young-hispanic-latino-businessman-walking-600w-1152383948.jpg"
+                              ];
 
                               Random random = new Random();
-                              int randomNumber = random.nextInt(usersImages.length);
-
+                              int randomNumber =
+                                  random.nextInt(usersImages.length);
 
                               User? user =
                                   await FireAuth.registerUsingEmailPassword(
@@ -196,10 +197,12 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                                 "userPhoneNumber": phonenumberController.text,
                                 "userEmail": emailController.text,
                                 "userPassword": passwordController.text,
-                                "userPills": []
-                                ,"userPhoto":usersImages[randomNumber]
+                                "userPills": [],
+                                "userPhoto": usersImages[randomNumber]
                               };
-                              await FirebaseFirestore.instance
+
+                              await FireAuth.UploadUserDetails(data);
+                              FirebaseFirestore.instance
                                   .collection("Users")
                                   .doc()
                                   .set(data);

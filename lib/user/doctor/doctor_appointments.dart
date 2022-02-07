@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/addappointment.dart';
 import 'package:mypill/user/doctor/searchForUser.dart';
@@ -27,24 +28,17 @@ class _AppointmentsState extends State<DoctorAppointments> {
         Navigator.pop(context);
       },
     );
-    Widget DeleteButton = FlatButton(
+    Widget deleteButton =  FlatButton(
       child: Text("Delete"),
       onPressed: () async {
         appointments.removeWhere((element) => element["title"] == childTitle);
 
-       
-          var snapshot = await await FirebaseFirestore.instance
-              .collection("appoinments")
-              .where('title', isEqualTo: childTitle).where("doctorName",isEqualTo: widget.doctor["doctorName"])
-              .get();
-          for (var doc in snapshot.docs) {
-            await doc.reference.delete();
-          }
+        await FireAuth.deleteAppointmentByTitle(
+            childTitle, widget.doctor["doctorName"]);
 
-          setState(() {
-            widget.userAppointments = appointments;
-          });
-        
+        setState(() {
+          widget.userAppointments = appointments;
+        });
 
         Navigator.pop(context);
       },
@@ -54,7 +48,7 @@ class _AppointmentsState extends State<DoctorAppointments> {
     AlertDialog alert = AlertDialog(
       title: Text("Hi user"),
       content: Text(childTitle),
-      actions: [CancelButton, DeleteButton],
+      actions: [CancelButton, deleteButton],
     );
 
     // show the dialog
@@ -69,7 +63,6 @@ class _AppointmentsState extends State<DoctorAppointments> {
   @override
   Widget build(BuildContext context) {
     var appointments = widget.userAppointments;
-    print("appointments -> ${appointments}");
 
     return Scaffold(
       body: Padding(
@@ -86,7 +79,10 @@ class _AppointmentsState extends State<DoctorAppointments> {
                     IconButton(
                       onPressed: () => {
                         Navigator.of(context).pushReplacement(ScaleRoute(
-                            page: SearchForUser(doctor: widget.doctor,users: widget.users,)))
+                            page: SearchForUser(
+                          doctor: widget.doctor,
+                          users: widget.users,
+                        )))
                       },
                       icon: Icon(
                         Icons.account_circle_rounded,
@@ -99,7 +95,6 @@ class _AppointmentsState extends State<DoctorAppointments> {
                       "Your Appoinments",
                       style: TextStyle(fontSize: 25),
                     )),
-                   
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 ),
@@ -149,5 +144,4 @@ class _AppointmentsState extends State<DoctorAppointments> {
       ),
     );
   }
-
 }

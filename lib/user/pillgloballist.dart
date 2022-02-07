@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/backend/pills.dart';
 import 'package:mypill/user/guest/login_as_a_guest.dart';
@@ -12,7 +13,11 @@ class PillGlobalList extends StatefulWidget {
   final userPillsFromDb;
 
   const PillGlobalList(
-      {Key? key, required this.user, this.userData, this.globalList,this.userPillsFromDb})
+      {Key? key,
+      required this.user,
+      this.userData,
+      this.globalList,
+      this.userPillsFromDb})
       : super(key: key);
 
   @override
@@ -65,7 +70,6 @@ class PillGlobalListState extends State<PillGlobalList> {
 
   @override
   Widget build(BuildContext context) {
-    print("globalList -> is ${widget.globalList}");
     TimeOfDay selectedTime = TimeOfDay.now();
     pills = widget.globalList;
 
@@ -76,11 +80,9 @@ class PillGlobalListState extends State<PillGlobalList> {
               onPressed: () => {
                     Navigator.of(context).pushReplacement(ScaleRoute(
                         page: HomePage(
-                      user: this.user,
-                      userData: widget.userData,
-                      
-                      userPillsFromDb:widget.userPillsFromDb
-                    )))
+                            user: this.user,
+                            userData: widget.userData,
+                            userPillsFromDb: widget.userPillsFromDb)))
                   },
               icon: Icon(Icons.arrow_back))
         ],
@@ -154,31 +156,22 @@ class PillGlobalListState extends State<PillGlobalList> {
                           TimeOfDay? date = await showTimePicker(
                               context: context,
                               initialTime: TimeOfDay(hour: 10, minute: 5));
-
-                          print("date hour -> ${date?.hour}");
-                          print("date minute -> ${date?.minute}");
                           List<dynamic> userPillsList = [];
                           strone["time"] = "${date?.hour} : ${date?.minute}";
 
                           if (user != null) {
                             userPillsList = widget.userData["userPills"];
-
                             userPillsList.add(strone);
-                            await FirebaseFirestore.instance
-                                .collection("Users")
-                                .doc(widget.userData["docId"])
-                                .update({"userPills": userPillsList});
+                            await FireAuth.updateUserPillsList(widget.userData["docId"],userPillsList);
+                       
                           } else {
                             userPillsList.add(strone);
                           }
 
                           if (date != null) {
-                            print("ameeeeeeeeeeeeeeeeeeeeer");
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page: HomePage(
                               user: user,
-                              
-                            
                               userData: widget.userData,
                               userPillsFromDb: userPillsList,
                             )));

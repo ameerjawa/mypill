@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/appointments.dart';
 import 'package:mypill/user/backend/pills.dart';
@@ -59,10 +60,9 @@ class _HomePageState extends State<HomePage> {
         pills.removeWhere((element) => element["pillName"] == childTitle);
 
         if (widget.user != null) {
-          await FirebaseFirestore.instance
-              .collection("Users")
-              .doc(widget.userData["docId"])
-              .update({"userPills": pills});
+          await FireAuth.deletePillAsUser(widget.userData["docId"],pills);
+
+         
           setState(() {
             widget.userData["userPills"] = pills;
           });
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
       ),
       MoreSettings(
         user: widget.user,
-        userData:widget.userData ,
+        userData: widget.userData,
       ),
     ];
     return Scaffold(
@@ -287,7 +287,7 @@ class _HomePageState extends State<HomePage> {
 class MoreSettings extends StatelessWidget {
   User? user;
   final userData;
-  MoreSettings({Key? key, this.user,this.userData}) : super(key: key);
+  MoreSettings({Key? key, this.user, this.userData}) : super(key: key);
 
   Future<List<dynamic>> getUserAppointments() async {
     QuerySnapshot querySnapshot =
@@ -339,8 +339,10 @@ class MoreSettings extends StatelessWidget {
 
                     Navigator.of(context).pushReplacement(ScaleRoute(
                         page: Appointments(
-                            user: this.user,
-                            userAppointments: userAppointments,userData:userData,)));
+                      user: this.user,
+                      userAppointments: userAppointments,
+                      userData: userData,
+                    )));
                   } else {
                     showAlertDialog(context, "Access Denied for Guest");
                   }
@@ -377,7 +379,10 @@ class MoreSettings extends StatelessWidget {
                   if (this.user != null)
                     {
                       Navigator.of(context).pushReplacement(ScaleRoute(
-                          page: PersonalInformation(user: this.user,userData: this.userData,)))
+                          page: PersonalInformation(
+                        user: this.user,
+                        userData: this.userData,
+                      )))
                     }
                   else
                     {showAlertDialog(context, "Access Denied for Guest")}
@@ -411,8 +416,11 @@ class MoreSettings extends StatelessWidget {
                 onTap: () => {
                   if (this.user != null)
                     {
-                      Navigator.of(context).pushReplacement(
-                          ScaleRoute(page: ChangePasswordUser(user: this.user,userData: this.userData,)))
+                      Navigator.of(context).pushReplacement(ScaleRoute(
+                          page: ChangePasswordUser(
+                        user: this.user,
+                        userData: this.userData,
+                      )))
                     }
                   else
                     {showAlertDialog(context, "Access Denied for Guest")}

@@ -1,19 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/personalinformation.dart';
 
 class EnterDoctorName extends StatefulWidget {
   final userData;
-  const EnterDoctorName({Key? key,this.userData}) : super(key: key);
+  const EnterDoctorName({Key? key, this.userData}) : super(key: key);
 
   @override
   _EnterDoctorNameState createState() => _EnterDoctorNameState();
 }
 
 class _EnterDoctorNameState extends State<EnterDoctorName> {
-      final _formKey = GlobalKey<FormState>();
-      var doctorNameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  var doctorNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +30,10 @@ class _EnterDoctorNameState extends State<EnterDoctorName> {
                 children: [
                   IconButton(
                       onPressed: () => {
-                            Navigator.of(context).pushReplacement(
-                                ScaleRoute(page: PersonalInformation(userData: widget.userData,)))
+                            Navigator.of(context).pushReplacement(ScaleRoute(
+                                page: PersonalInformation(
+                              userData: widget.userData,
+                            )))
                           },
                       icon: Icon(
                         Icons.arrow_back,
@@ -87,18 +90,19 @@ class _EnterDoctorNameState extends State<EnterDoctorName> {
                             alignment: Alignment.bottomRight,
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.blueGrey)),
-                              onPressed: () => {
-                                  if (_formKey.currentState!.validate())
-                                      {
-                                            FirebaseFirestore.instance.collection("Users").doc(widget.userData["docId"]).update({"doctorName":doctorNameController.text}),
-                                               Navigator.of(context).pushReplacement(
-                                    ScaleRoute(page: PersonalInformation(userData: widget.userData,)))
-                                        
-                                    
-                                      }
-                              
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.blueGrey)),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await FireAuth.changeDoctor(
+                                      widget.userData["docId"],
+                                      doctorNameController.text);
+                                  Navigator.of(context)
+                                      .pushReplacement(ScaleRoute(
+                                          page: PersonalInformation(
+                                    userData: widget.userData,
+                                  )));
+                                }
                               },
                               child: Text("Done"),
                             ),

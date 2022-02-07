@@ -31,22 +31,6 @@ class SearchForUserState extends State<SearchForUser> {
     super.initState();
   }
 
-  Future<List<dynamic>> getDoctorAppointments() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("appoinments").get();
-
-    // Get data from docs and convert map to List
-    final appointments = [];
-
-    querySnapshot.docs.forEach((element) {
-      if (element.get("doctorName") == widget.doctor['doctorName']) {
-        appointments.add(element.data());
-      }
-    });
-
-    return appointments;
-  }
-
   void filterSearchResults(String query) {
     var dummySearchList = [];
     dummySearchList.addAll(pills);
@@ -83,7 +67,6 @@ class SearchForUserState extends State<SearchForUser> {
     // print("users -->${widget.users}");
     pills = widget.users;
 
-    // print("filteredPills.length  ---->    ${filteredPills.length} ");
     return Scaffold(
       appBar: AppBar(
         title: Text("Hi D'r ${widget.doctor['doctorName']}"),
@@ -92,7 +75,8 @@ class SearchForUserState extends State<SearchForUser> {
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.grey)),
             onPressed: () async {
-              var doctor_appointments = await getDoctorAppointments();
+              var doctor_appointments = await FireAuth.getDoctorAppointments(
+                  widget.doctor['doctorName']);
 
               Navigator.of(context).pushReplacement(ScaleRoute(
                   page: DoctorAppointments(
@@ -110,7 +94,7 @@ class SearchForUserState extends State<SearchForUser> {
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.red)),
             onPressed: () async {
-              await signOut();
+              await FireAuth.userSignOutAuth();
 
               Navigator.of(context)
                   .pushReplacement(ScaleRoute(page: MainPage()));
@@ -170,7 +154,6 @@ class SearchForUserState extends State<SearchForUser> {
               Expanded(
                 child: ListView(
                   children: filteredPills.map((strone) {
-                    // print("strone --------------> ${strone}");
 
                     return Container(
                       decoration: BoxDecoration(
@@ -187,9 +170,7 @@ class SearchForUserState extends State<SearchForUser> {
                             : "user does'nt provide phone number "),
                         onTap: () async {
                           showAlertDialog(context, strone);
-                          // date = await showTimePicker(
-                          //     context: context,
-                          //     initialTime: TimeOfDay(hour: 10, minute: 5));
+                        
                         },
                       ),
                     );

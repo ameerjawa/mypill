@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/addappointment.dart';
 import 'package:mypill/user/userprofile.dart';
@@ -32,13 +33,8 @@ class _AppointmentsState extends State<Appointments> {
         appointments.removeWhere((element) => element["title"] == childTitle);
 
         if (widget.user != null) {
-          var snapshot = await await FirebaseFirestore.instance
-              .collection("appoinments")
-              .where('title', isEqualTo: childTitle).where("userEmail",isEqualTo: widget.user?.email)
-              .get();
-          for (var doc in snapshot.docs) {
-            await doc.reference.delete();
-          }
+          await FireAuth.deleteAppointmentAsUser(
+              childTitle, widget.user?.email);
 
           setState(() {
             widget.userAppointments = appointments;
@@ -103,7 +99,7 @@ class _AppointmentsState extends State<Appointments> {
                     )),
                     IconButton(
                         onPressed: () async {
-                          var doctors = await getAllDoctorsForUsers();
+                          var doctors = await FireAuth.getAllDoctorsForUsers();
 
                           Navigator.of(context).pushReplacement(ScaleRoute(
                               page: AddAppointment(
@@ -166,13 +162,5 @@ class _AppointmentsState extends State<Appointments> {
     );
   }
 
-  Future<List<dynamic>> getAllDoctorsForUsers() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("Doctors").get();
-
-    // Get data from docs and convert map to List
-    final doctors = querySnapshot.docs.map((doc) => doc.data()).toList();
-
-    return doctors;
-  }
+ 
 }

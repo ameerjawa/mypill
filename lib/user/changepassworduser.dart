@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/userprofile.dart';
 
@@ -140,17 +141,27 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Colors.blueGrey)),
-                                  onPressed: () => {
-
-                                    if (_formKey.currentState!.validate())
-                                      {
-                                        widget.user?.updatePassword(newPasswordFirstController.text).then((value) => {
-                                            FirebaseFirestore.instance.collection("Users").doc(widget.userData["docId"]).update({"userPassword":newPasswordFirstController.text}),
-                                            Navigator.of(context).pushReplacement(
-                                            ScaleRoute(page: UserProfile(user: widget.user,userData: widget.userData,)))
-                                        }).catchError((err)=>print(err))
-                                    
-                                      }
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      widget.user
+                                          ?.updatePassword(
+                                              newPasswordFirstController.text)
+                                          .then((value) => {
+                                                FireAuth
+                                                    .updateUserPasswordFireStore(
+                                                        widget
+                                                            .userData["docId"],
+                                                        newPasswordFirstController
+                                                            .text),
+                                                Navigator.of(context)
+                                                    .pushReplacement(ScaleRoute(
+                                                        page: UserProfile(
+                                                  user: widget.user,
+                                                  userData: widget.userData,
+                                                )))
+                                              })
+                                          .catchError((err) => print(err));
+                                    }
                                   },
                                   child: Text("Done"),
                                 ),

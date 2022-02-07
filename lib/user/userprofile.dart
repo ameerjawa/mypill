@@ -1,9 +1,8 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/backend/googleSignIn.dart';
 import 'package:mypill/user/changepassworduser.dart';
@@ -24,8 +23,6 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
-    print("user -> ${widget.user}");
-    print("userdata -> ${widget.userData}");
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 48.0),
@@ -41,7 +38,6 @@ class _UserProfileState extends State<UserProfile> {
                       onPressed: () => {
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page: HomePage(
-                              
                               user: widget.user,
                               userData: widget.userData,
                             )))
@@ -64,8 +60,11 @@ class _UserProfileState extends State<UserProfile> {
                       child: GestureDetector(
                         child: CircleAvatar(
                           radius: 70,
-                          backgroundImage: NetworkImage(
-                              widget.userData?["userPhoto"]!=null?widget.userData["userPhoto"]:"https://image.shutterstock.com/image-photo/young-hispanic-latino-businessman-walking-600w-1152383948.jpg"),
+                          backgroundImage: NetworkImage(widget
+                                      .userData?["userPhoto"] !=
+                                  null
+                              ? widget.userData["userPhoto"]
+                              : "https://image.shutterstock.com/image-photo/young-hispanic-latino-businessman-walking-600w-1152383948.jpg"),
                         ),
                       ),
                     ),
@@ -98,17 +97,20 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         InkWell(
                           onTap: () => {
-                            if(widget.user !=null){
-                              Navigator.of(context).pushReplacement(ScaleRoute(
-                                page: ChangePasswordUser(
-                              user: widget.user,
-                              userData: widget.userData,
-                            )))
-                            }else{
-                                  showAlertDialog(context,
-                                "Access Denied for Guest")
-                            }
-                        
+                            if (widget.user != null)
+                              {
+                                Navigator.of(context)
+                                    .pushReplacement(ScaleRoute(
+                                        page: ChangePasswordUser(
+                                  user: widget.user,
+                                  userData: widget.userData,
+                                )))
+                              }
+                            else
+                              {
+                                showAlertDialog(
+                                    context, "Access Denied for Guest")
+                              }
                           },
                           child: Container(
                             child: Row(
@@ -129,17 +131,20 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                         InkWell(
                           onTap: () => {
-                            if(widget.user != null ){
-                           Navigator.of(context).pushReplacement(ScaleRoute(
-                                page: PersonalInformation(
+                            if (widget.user != null)
+                              {
+                                Navigator.of(context)
+                                    .pushReplacement(ScaleRoute(
+                                        page: PersonalInformation(
                                   user: widget.user,
-                              userData: widget.userData,
-                            )))
-                            }else{
-                                showAlertDialog(context,
-                                "Access Denied for Guest")
-                            }
-                         
+                                  userData: widget.userData,
+                                )))
+                              }
+                            else
+                              {
+                                showAlertDialog(
+                                    context, "Access Denied for Guest")
+                              }
                           },
                           child: Container(
                             child: Row(
@@ -236,7 +241,7 @@ class _UserProfileState extends State<UserProfile> {
                                   backgroundColor:
                                       MaterialStateProperty.all(Colors.red)),
                               onPressed: () async {
-                                await signOut();
+                                await FireAuth.userSignOutAuth();
 
                                 Navigator.of(context).pushReplacement(
                                     ScaleRoute(page: MainPage()));

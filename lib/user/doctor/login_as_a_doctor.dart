@@ -130,19 +130,14 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
                                     password: passwordController.text,
                                     context: context);
                             if (user != null) {
-                              var doctorData = {};
 
-                              await FirebaseFirestore.instance
-                                  .collection('Doctors')
-                                  .where('doctorEmail',
-                                      isEqualTo: emailController.text)
-                                  .get()
-                                  .then((value) => {
-                                        print(value.docs),
-                                        doctorData = value.docs.first.data()
-                                      });
+                              // get doctor details
+                              var doctorData = await FireAuth.getDoctorDetails(
+                                  emailController.text);
 
-                              var users = await getAllUsersForDoctor();
+                             
+                              // get all users names to let the doctor search and filter them
+                              var users = await FireAuth.getAllUsersForDoctor();
 
                               Navigator.pushReplacement(
                                   context,
@@ -166,28 +161,5 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
     );
   }
 }
-
-Future<List<dynamic>> getAllUsersForDoctor() async {
-
-
-
-
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection("Users").get();
-
-    // Get data from docs and convert map to List
-    final users = querySnapshot.docs.map((doc) => doc.data()).toList();
-
-
-
-
-
-
-
-
-
-  return users;
-}
-
-
 
 

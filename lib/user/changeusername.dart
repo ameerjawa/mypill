@@ -1,21 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/personalinformation.dart';
 
 class ChangeUserName extends StatefulWidget {
   final userData;
-  const ChangeUserName({Key? key,this.userData}) : super(key: key);
+  const ChangeUserName({Key? key, this.userData}) : super(key: key);
 
   @override
   _ChangeUserNameState createState() => _ChangeUserNameState();
 }
 
 class _ChangeUserNameState extends State<ChangeUserName> {
-
-    final _formKey = GlobalKey<FormState>();
-      var newUserName = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
+  var newUserName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +31,10 @@ class _ChangeUserNameState extends State<ChangeUserName> {
                 children: [
                   IconButton(
                       onPressed: () => {
-                            Navigator.of(context).pushReplacement(
-                                ScaleRoute(page: PersonalInformation(userData: widget.userData,)))
+                            Navigator.of(context).pushReplacement(ScaleRoute(
+                                page: PersonalInformation(
+                              userData: widget.userData,
+                            )))
                           },
                       icon: Icon(
                         Icons.arrow_back,
@@ -68,7 +69,8 @@ class _ChangeUserNameState extends State<ChangeUserName> {
                         ),
                       ),
                       SizedBox(height: 30),
-                      Form(key: _formKey,
+                      Form(
+                        key: _formKey,
                         child: Column(children: [
                           TextFormField(
                             controller: newUserName,
@@ -89,19 +91,23 @@ class _ChangeUserNameState extends State<ChangeUserName> {
                             alignment: Alignment.bottomRight,
                             child: ElevatedButton(
                               style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.blueGrey)),
-                              onPressed: () => {
-
-                                  if (_formKey.currentState!.validate())
-                                      {
-                                            FirebaseFirestore.instance.collection("Users").doc(widget.userData["docId"]).update({"username":newUserName.text}),
-                                              Navigator.of(context).pushReplacement(
-                                               ScaleRoute(page: PersonalInformation(userData: widget.userData,)))
-                                        
-                                    
-                                      }
-                             
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.blueGrey)),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await FireAuth.updateUserNameFireStore(
+                                      widget.userData["docId"],
+                                      newUserName.text);
+                                  FirebaseFirestore.instance
+                                      .collection("Users")
+                                      .doc(widget.userData["docId"])
+                                      .update({"username": newUserName.text});
+                                  Navigator.of(context)
+                                      .pushReplacement(ScaleRoute(
+                                          page: PersonalInformation(
+                                    userData: widget.userData,
+                                  )));
+                                }
                               },
                               child: Text("Done"),
                             ),

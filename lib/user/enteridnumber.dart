@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/personalinformation.dart';
 
 class EnterIdNumber extends StatefulWidget {
   final userData;
-  const EnterIdNumber({Key? key,this.userData}) : super(key: key);
+  const EnterIdNumber({Key? key, this.userData}) : super(key: key);
 
   @override
   _EnterIdNumberState createState() => _EnterIdNumberState();
@@ -30,8 +31,10 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                 children: [
                   IconButton(
                       onPressed: () => {
-                            Navigator.of(context).pushReplacement(
-                                ScaleRoute(page: PersonalInformation(userData:widget.userData ,)))
+                            Navigator.of(context).pushReplacement(ScaleRoute(
+                                page: PersonalInformation(
+                              userData: widget.userData,
+                            )))
                           },
                       icon: Icon(
                         Icons.arrow_back,
@@ -90,16 +93,21 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       Colors.blueGrey)),
-                              onPressed: () => {
-                                if (_formKey.currentState!.validate())
-                                  {
-                                    FirebaseFirestore.instance
-                                        .collection("Users")
-                                        .doc(widget.userData["docId"])
-                                        .update({"idNumber": newIdNumber.text}),
-                                    Navigator.of(context).pushReplacement(
-                                        ScaleRoute(page: PersonalInformation(userData: widget.userData,)))
-                                  }
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await FireAuth.ChangeIdNumber(
+                                      widget.userData["docId"],
+                                      newIdNumber.text);
+                                  FirebaseFirestore.instance
+                                      .collection("Users")
+                                      .doc(widget.userData["docId"])
+                                      .update({"idNumber": newIdNumber.text});
+                                  Navigator.of(context)
+                                      .pushReplacement(ScaleRoute(
+                                          page: PersonalInformation(
+                                    userData: widget.userData,
+                                  )));
+                                }
                               },
                               child: Text("Done"),
                             ),

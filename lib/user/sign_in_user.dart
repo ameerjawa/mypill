@@ -103,7 +103,6 @@ class _SignInUserState extends State<SignInUser> {
                                     context: context);
                             if (user != null) {
                               var userData = {};
-                              print("email text -> ${emailController.text}");
                               var docId = "";
                               await FirebaseFirestore.instance
                                   .collection('Users')
@@ -111,7 +110,6 @@ class _SignInUserState extends State<SignInUser> {
                                       isEqualTo: emailController.text)
                                   .get()
                                   .then((value) => {
-                                        print(value.docs),
                                         userData = value.docs.first.data(),
                                         docId = value.docs.first.id,
                                         userData["docId"] = docId
@@ -153,21 +151,10 @@ class _SignInUserState extends State<SignInUser> {
 
                           print("user -> ${user}");
                           if (user != null) {
-                            var userData = null;
-                            var docId = "";
-                            await FirebaseFirestore.instance
-                                .collection('Users')
-                                .where('userEmail', isEqualTo: user.email)
-                                .get()
-                                .then((value) => {
-                                      if (value.docs.length != 0)
-                                        {
-                                          print("value.docs ${value.docs}"),
-                                          userData = value.docs.first.data(),
-                                          docId = value.docs.first.id,
-                                          userData["docId"] = docId
-                                        }
-                                    });
+                            var userData = await FireAuth.getUserDataFireStore(user.email);
+
+
+                     
                             if (userData == null) {
                               var data = {
                                 "username": user.displayName,
