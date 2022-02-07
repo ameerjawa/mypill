@@ -4,11 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
-import 'package:mypill/user/sign_in_user.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
+import 'package:mypill/user/patient/patientAuthintication/sign_in_user.dart';
 import 'dart:math';
 
-import 'main_page.dart';
+import '../../main_page.dart';
 
 class SignUpAsUser extends StatefulWidget {
   const SignUpAsUser({Key? key}) : super(key: key);

@@ -1,20 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/personalinformation.dart';
+import 'package:mypill/user/patient/personalInformation/personalinformation.dart';
 
-class ChangeUserName extends StatefulWidget {
+class EnterHeightAndWeight extends StatefulWidget {
   final userData;
-  const ChangeUserName({Key? key, this.userData}) : super(key: key);
+  const EnterHeightAndWeight({Key? key, this.userData}) : super(key: key);
 
   @override
-  _ChangeUserNameState createState() => _ChangeUserNameState();
+  _EnterHeightAndWeightState createState() => _EnterHeightAndWeightState();
 }
 
-class _ChangeUserNameState extends State<ChangeUserName> {
+class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
   final _formKey = GlobalKey<FormState>();
-  var newUserName = TextEditingController();
+  var heightController = TextEditingController();
+  var weightController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class _ChangeUserNameState extends State<ChangeUserName> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 300,
+                height: 350,
                 decoration: BoxDecoration(color: Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -62,24 +63,40 @@ class _ChangeUserNameState extends State<ChangeUserName> {
                             SizedBox(
                               width: 20,
                             ),
-                            Text("Change User Name",
+                            Text("Height & Weight",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w600))
                           ],
                         ),
                       ),
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
                       Form(
                         key: _formKey,
                         child: Column(children: [
                           TextFormField(
-                            controller: newUserName,
+                            controller: heightController,
+                            keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
-                              labelText: 'Enter new username',
+                              labelText: 'Enter Height in CM',
                             ),
                             validator: (value) {
                               if (value == "") {
-                                return 'UserName is required';
+                                return 'Height is required';
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            controller: weightController,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              labelText: 'Enter Weight in Kilogram',
+                            ),
+                            validator: (value) {
+                              if (value == "") {
+                                return 'Weight is required';
                               }
                             },
                           ),
@@ -95,18 +112,15 @@ class _ChangeUserNameState extends State<ChangeUserName> {
                                       Colors.blueGrey)),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await FireAuth.updateUserNameFireStore(
+                                  await FireAuth.UpdateHeightAndWidthByUser(
                                       widget.userData["docId"],
-                                      newUserName.text);
-                                  FirebaseFirestore.instance
-                                      .collection("Users")
-                                      .doc(widget.userData["docId"])
-                                      .update({"username": newUserName.text});
-                                  Navigator.of(context)
-                                      .pushReplacement(ScaleRoute(
+                                      heightController.text,
+                                      weightController.text);
+
+                                  Navigator.of(context).pushReplacement(
+                                      ScaleRoute(
                                           page: PersonalInformation(
-                                    userData: widget.userData,
-                                  )));
+                                              userData: widget.userData)));
                                 }
                               },
                               child: Text("Done"),

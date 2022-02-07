@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mypill/splash_screen.dart';
+import 'package:mypill/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 

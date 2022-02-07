@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mypill/user/backend/googleSignIn.dart';
+import 'package:mypill/backend/googleApi/googleSignIn.dart';
 
 class FireAuth {
   /**
@@ -260,4 +260,19 @@ class FireAuth {
                                   .set(data);
 
   }
+
+  static getAllPillsFromGlobalListFireBase() async {
+  dynamic pills = [];
+  await FirebaseFirestore.instance
+      .collection("PillGlobalList")
+      .get()
+      .then((value) => {
+            value.docs.forEach((element) {
+              pills.add(element.data());
+            })
+          });
+
+  return pills;
+}
+
 }

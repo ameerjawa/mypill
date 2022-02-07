@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/backend/googleSignIn.dart';
-import 'package:mypill/user/changepassworduser.dart';
+import 'package:mypill/backend/googleApi/googleSignIn.dart';
+import 'package:mypill/user/patient/personalInformation/changepassworduser.dart';
 import 'package:mypill/user/guest/login_as_a_guest.dart';
 import 'package:mypill/user/main_page.dart';
-import 'package:mypill/user/personalinformation.dart';
+import 'package:mypill/user/patient/personalInformation/personalinformation.dart';
 import 'package:share/share.dart';
 
 class UserProfile extends StatefulWidget {

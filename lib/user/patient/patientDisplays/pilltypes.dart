@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import 'guest/login_as_a_guest.dart';
+import '../../guest/login_as_a_guest.dart';
 
 class SpecifecPillTypes extends StatefulWidget {
   User? user;

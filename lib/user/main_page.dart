@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/doctor/login_as_a_doctor.dart';
 import 'package:mypill/user/guest/login_as_a_guest.dart';
-import 'package:mypill/user/sign_in_user.dart';
-import 'package:mypill/user/sign_up_user.dart';
+import 'package:mypill/user/patient/patientAuthintication/sign_in_user.dart';
+import 'package:mypill/user/patient/patientAuthintication/sign_up_user.dart';
 
 import 'doctor/signUp_as_doctor.dart';
 

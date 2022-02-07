@@ -1,22 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/personalinformation.dart';
+import 'package:mypill/user/patient/personalInformation/personalinformation.dart';
 
-class EnterHeightAndWeight extends StatefulWidget {
+class EnterDoctorName extends StatefulWidget {
   final userData;
-  const EnterHeightAndWeight({Key? key, this.userData}) : super(key: key);
+  const EnterDoctorName({Key? key, this.userData}) : super(key: key);
 
   @override
-  _EnterHeightAndWeightState createState() => _EnterHeightAndWeightState();
+  _EnterDoctorNameState createState() => _EnterDoctorNameState();
 }
 
-class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
+class _EnterDoctorNameState extends State<EnterDoctorName> {
   final _formKey = GlobalKey<FormState>();
-  var heightController = TextEditingController();
-  var weightController = TextEditingController();
-
+  var doctorNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +46,7 @@ class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: 350,
+                height: 300,
                 decoration: BoxDecoration(color: Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -63,40 +61,24 @@ class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
                             SizedBox(
                               width: 20,
                             ),
-                            Text("Height & Weight",
+                            Text("My Doctor",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w600))
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                       Form(
                         key: _formKey,
                         child: Column(children: [
                           TextFormField(
-                            controller: heightController,
-                            keyboardType: TextInputType.number,
+                            controller: doctorNameController,
                             decoration: const InputDecoration(
-                              labelText: 'Enter Height in CM',
+                              labelText: 'Enter Doctor Name',
                             ),
                             validator: (value) {
                               if (value == "") {
-                                return 'Height is required';
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            controller: weightController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              labelText: 'Enter Weight in Kilogram',
-                            ),
-                            validator: (value) {
-                              if (value == "") {
-                                return 'Weight is required';
+                                return 'Doctor name is required';
                               }
                             },
                           ),
@@ -112,15 +94,14 @@ class _EnterHeightAndWeightState extends State<EnterHeightAndWeight> {
                                       Colors.blueGrey)),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await FireAuth.UpdateHeightAndWidthByUser(
+                                  await FireAuth.changeDoctor(
                                       widget.userData["docId"],
-                                      heightController.text,
-                                      weightController.text);
-
-                                  Navigator.of(context).pushReplacement(
-                                      ScaleRoute(
+                                      doctorNameController.text);
+                                  Navigator.of(context)
+                                      .pushReplacement(ScaleRoute(
                                           page: PersonalInformation(
-                                              userData: widget.userData)));
+                                    userData: widget.userData,
+                                  )));
                                 }
                               },
                               child: Text("Done"),

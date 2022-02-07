@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/backend/googleSignIn.dart';
+import 'package:mypill/backend/googleApi/googleSignIn.dart';
 
 import '../main_page.dart';
 import 'doctor_appointments.dart';

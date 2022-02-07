@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/changeusername.dart';
-import 'package:mypill/user/enterdoctorname.dart';
-import 'package:mypill/user/enterheightandweight.dart';
-import 'package:mypill/user/enteridnumber.dart';
-import 'package:mypill/user/userprofile.dart';
+import 'package:mypill/user/patient/personalInformation/changeusername.dart';
+import 'package:mypill/user/patient/personalInformation/enterdoctorname.dart';
+import 'package:mypill/user/patient/personalInformation/enterheightandweight.dart';
+import 'package:mypill/user/patient/personalInformation/enteridnumber.dart';
+import 'package:mypill/user/patient/patientDisplays/userprofile.dart';
 
 import 'package:share/share.dart';
 

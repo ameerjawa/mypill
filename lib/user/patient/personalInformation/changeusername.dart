@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/personalinformation.dart';
+import 'package:mypill/user/patient/personalInformation/personalinformation.dart';
 
-class EnterIdNumber extends StatefulWidget {
+class ChangeUserName extends StatefulWidget {
   final userData;
-  const EnterIdNumber({Key? key, this.userData}) : super(key: key);
+  const ChangeUserName({Key? key, this.userData}) : super(key: key);
 
   @override
-  _EnterIdNumberState createState() => _EnterIdNumberState();
+  _ChangeUserNameState createState() => _ChangeUserNameState();
 }
 
-class _EnterIdNumberState extends State<EnterIdNumber> {
+class _ChangeUserNameState extends State<ChangeUserName> {
   final _formKey = GlobalKey<FormState>();
-  var newIdNumber = TextEditingController();
+  var newUserName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                             SizedBox(
                               width: 20,
                             ),
-                            Text("Enter Id Number",
+                            Text("Change User Name",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w600))
                           ],
@@ -73,13 +73,13 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                         key: _formKey,
                         child: Column(children: [
                           TextFormField(
-                            controller: newIdNumber,
+                            controller: newUserName,
                             decoration: const InputDecoration(
-                              labelText: 'Enter Id Number',
+                              labelText: 'Enter new username',
                             ),
                             validator: (value) {
                               if (value == "") {
-                                return 'Id Number is required';
+                                return 'UserName is required';
                               }
                             },
                           ),
@@ -95,13 +95,13 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                                       Colors.blueGrey)),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await FireAuth.ChangeIdNumber(
+                                  await FireAuth.updateUserNameFireStore(
                                       widget.userData["docId"],
-                                      newIdNumber.text);
+                                      newUserName.text);
                                   FirebaseFirestore.instance
                                       .collection("Users")
                                       .doc(widget.userData["docId"])
-                                      .update({"idNumber": newIdNumber.text});
+                                      .update({"username": newUserName.text});
                                   Navigator.of(context)
                                       .pushReplacement(ScaleRoute(
                                           page: PersonalInformation(

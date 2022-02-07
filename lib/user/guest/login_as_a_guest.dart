@@ -4,19 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/appointments.dart';
-import 'package:mypill/user/backend/pills.dart';
-import 'package:mypill/user/changepassworduser.dart';
-import 'package:mypill/user/findpatient.dart';
-import 'package:mypill/user/personalinformation.dart';
-import 'package:mypill/user/pillgloballist.dart';
-import 'package:mypill/user/userprofile.dart';
+import 'package:mypill/user/patient/patientActions/appointments.dart';
+import 'package:mypill/user/patient/personalInformation/changepassworduser.dart';
+import 'package:mypill/user/patient/patientActions/findpatient.dart';
+import 'package:mypill/user/patient/personalInformation/personalinformation.dart';
+import 'package:mypill/user/patient/patientDisplays/pillgloballist.dart';
+import 'package:mypill/user/patient/patientDisplays/userprofile.dart';
 import 'package:intl/intl.dart';
 
 import '../main_page.dart';
-import '../pilltypes.dart';
+import '../patient/patientDisplays/pilltypes.dart';
 
 class HomePage extends StatefulWidget {
   var strone;
@@ -139,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                           style: ButtonStyle(),
                           onPressed: () async {
                             var globalpills =
-                                await getAllPillsFromGlobalListFireBase();
+                                await FireAuth.getAllPillsFromGlobalListFireBase();
 
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page: PillGlobalList(

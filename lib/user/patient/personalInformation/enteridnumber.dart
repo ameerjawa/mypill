@@ -1,20 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mypill/fireBase/fire-auth.dart';
+import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
-import 'package:mypill/user/personalinformation.dart';
+import 'package:mypill/user/patient/personalInformation/personalinformation.dart';
 
-class EnterDoctorName extends StatefulWidget {
+class EnterIdNumber extends StatefulWidget {
   final userData;
-  const EnterDoctorName({Key? key, this.userData}) : super(key: key);
+  const EnterIdNumber({Key? key, this.userData}) : super(key: key);
 
   @override
-  _EnterDoctorNameState createState() => _EnterDoctorNameState();
+  _EnterIdNumberState createState() => _EnterIdNumberState();
 }
 
-class _EnterDoctorNameState extends State<EnterDoctorName> {
+class _EnterIdNumberState extends State<EnterIdNumber> {
   final _formKey = GlobalKey<FormState>();
-  var doctorNameController = TextEditingController();
+  var newIdNumber = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +62,7 @@ class _EnterDoctorNameState extends State<EnterDoctorName> {
                             SizedBox(
                               width: 20,
                             ),
-                            Text("My Doctor",
+                            Text("Enter Id Number",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w600))
                           ],
@@ -72,13 +73,13 @@ class _EnterDoctorNameState extends State<EnterDoctorName> {
                         key: _formKey,
                         child: Column(children: [
                           TextFormField(
-                            controller: doctorNameController,
+                            controller: newIdNumber,
                             decoration: const InputDecoration(
-                              labelText: 'Enter Doctor Name',
+                              labelText: 'Enter Id Number',
                             ),
                             validator: (value) {
                               if (value == "") {
-                                return 'Doctor name is required';
+                                return 'Id Number is required';
                               }
                             },
                           ),
@@ -94,9 +95,13 @@ class _EnterDoctorNameState extends State<EnterDoctorName> {
                                       Colors.blueGrey)),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await FireAuth.changeDoctor(
+                                  await FireAuth.ChangeIdNumber(
                                       widget.userData["docId"],
-                                      doctorNameController.text);
+                                      newIdNumber.text);
+                                  FirebaseFirestore.instance
+                                      .collection("Users")
+                                      .doc(widget.userData["docId"])
+                                      .update({"idNumber": newIdNumber.text});
                                   Navigator.of(context)
                                       .pushReplacement(ScaleRoute(
                                           page: PersonalInformation(
