@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/main_page.dart';
+import 'package:mypill/constants/ColorsHex.dart';
+
 
 // ignore: camel_case_types
 class Splash_Screen extends StatefulWidget {
@@ -31,7 +33,7 @@ class _SplashScreenState extends State<Splash_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.blueGrey[900]),
+        decoration: BoxDecoration(color: appBarColorBlue),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +46,7 @@ class _SplashScreenState extends State<Splash_Screen> {
                             letterSpacing: 10,
                             fontWeight: FontWeight.bold,
                             fontSize: 50,
-                            color: Colors.white))),
+                            color: backgroundColorNeonGreen))),
               ),
               SizedBox(height: 20),
               const SpinKitRipple(

@@ -114,7 +114,6 @@ class _SignInUserState extends State<SignInUser> {
                                         docId = value.docs.first.id,
                                         userData["docId"] = docId
                                       });
-                              var userPillsFromFirebase = userData["userPills"];
 
                               Navigator.pushReplacement(
                                   context,
@@ -168,13 +167,15 @@ class _SignInUserState extends State<SignInUser> {
                                   .doc()
                                   .set(data);
                             }
+                            
+                            
                             Navigator.pushReplacement(
                                 context,
                                 ScaleRoute(
                                     page: HomePage(
                                   user: user,
                                   userData: userData,
-                                  userPillsFromDb: [],
+                                  userPillsFromDb: userData["userPills"],
                                 )));
                           } else {
                             showAlertDialog(context, "something went wrong");

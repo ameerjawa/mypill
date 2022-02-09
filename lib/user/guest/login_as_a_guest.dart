@@ -152,49 +152,50 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      Column(
-        children: [
-          Container(
-            height: 40,
-            decoration: BoxDecoration(color: Colors.blue[50]),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text("Today , ${formattedDate.split('-').reversed.join('-')}")
-              ],
+      Container(
+        height:800,
+        child: Column(
+          children: [
+            Container(
+              height: 40,
+              decoration: BoxDecoration(color: Colors.blue[50]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text("Today , ${formattedDate.split('-').reversed.join('-')}")
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: 800,
-            decoration: BoxDecoration(color: Colors.black),
-            child: ListView.builder(
-                itemCount: userPills.length,
-                itemBuilder: (strone, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        border: Border(
-                            top: BorderSide(
-                                color: Colors.blueGrey, width: 1.0))),
-                    child: ListTile(
-                      title: Text(
-                        userPills[index]["pillName"] != null
-                            ? userPills[index]["pillName"]
-                            : "",
-                        style: TextStyle(fontSize: 30),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: userPills.length,
+                  itemBuilder: (strone, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          border: Border(
+                              top: BorderSide(
+                                  color: Colors.blueGrey, width: 1.0))),
+                      child: ListTile(
+                        title: Text(
+                          userPills[index]["pillName"] != null
+                              ? userPills[index]["pillName"]
+                              : "",
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        subtitle: Text(
+                          " ${userPills[index]["description"] != null ? userPills[index]["description"] : ""} - Time > ${userPills[index]["time"] != null ? userPills[index]["time"] : ""}",
+                        ),
+                        onTap: () async {
+                          showAlertDialog(
+                              context, userPills[index]["pillName"], userPills);
+                        },
                       ),
-                      subtitle: Text(
-                        " ${userPills[index]["description"] != null ? userPills[index]["description"] : ""} - Time > ${userPills[index]["time"] != null ? userPills[index]["time"] : ""}",
-                      ),
-                      onTap: () async {
-                        showAlertDialog(
-                            context, userPills[index]["pillName"], userPills);
-                      },
-                    ),
-                  );
-                }),
-          ),
-        ],
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
       MoreSettings(
         user: widget.user,

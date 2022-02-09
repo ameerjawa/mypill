@@ -6,6 +6,8 @@ import 'package:mypill/user/doctor/login_as_a_doctor.dart';
 import 'package:mypill/user/guest/login_as_a_guest.dart';
 import 'package:mypill/user/patient/patientAuthintication/sign_in_user.dart';
 import 'package:mypill/user/patient/patientAuthintication/sign_up_user.dart';
+import 'package:mypill/constants/ColorsHex.dart';
+
 
 import 'doctor/signUp_as_doctor.dart';
 
@@ -17,14 +19,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _signInUserState extends State<MainPage> {
-
   User? user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(color: Colors.blueGrey[900]),
+        decoration: BoxDecoration(color: appBarColorBlue),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: SingleChildScrollView(
@@ -39,112 +40,145 @@ class _signInUserState extends State<MainPage> {
                             letterSpacing: 10,
                             fontWeight: FontWeight.bold,
                             fontSize: 40,
-                            color: Colors.blue[400]))),
+                            color: backgroundColorNeonGreen))),
                 SizedBox(
                   height: 60,
                 ),
                 Text(
-                    "App that will keep track of your medicine and \n                            medical status",style:TextStyle(color: Colors.blue[50]
-                    ),),
+                  "App that will keep track of your medicine and \n                            medical status",
+                  style: TextStyle(color: Colors.blue[50],fontSize: 15),
+                ),
                 SizedBox(
                   height: 15,
                 ),
-                Text("We will save you some headache",style: TextStyle(color: Colors.blue[50]),),
+                Text(
+                  "We will save you some headache",
+                  style: TextStyle(color: Colors.blue[50],fontSize: 15),
+                ),
                 SizedBox(
                   height: 240,
                 ),
                 Center(
                   child: Container(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-          
-                      children:[ Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Row(
+                          Column(
                             children: [
-                              ElevatedButton(
-                                onPressed: () => {
-                                  Navigator.of(context)
-                                       .pushReplacement(ScaleRoute(page: Login_As_A_Doctor()))
-                                },
-                                child: Text("Doc login",style: GoogleFonts.aBeeZee(
-                    textStyle: TextStyle(
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white
-                    )),),
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[700])),
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () => {
+                                      Navigator.of(context).pushReplacement(
+                                          ScaleRoute(page: Login_As_A_Doctor()))
+                                    },
+                                    child: Text(
+                                      "Doc SignIn",
+                                      style: GoogleFonts.aBeeZee(
+                                          textStyle: TextStyle(
+                                              letterSpacing: 3,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: backgroundColorIvory)),
+                                    ),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                backgroundColorBlueGrotto)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () => {
+                                      Navigator.of(context).pushReplacement(
+                                          ScaleRoute(page: SignUpAsDoctor()))
+                                    },
+                                    child: Text("Doc SignUp",
+                                        style: GoogleFonts.aBeeZee(
+                                            textStyle: TextStyle(
+                                                letterSpacing: 3,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: backgroundColorIvory))),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                backgroundColorBlueGrotto)),
+                                  )
+                                ],
                               ),
-                              SizedBox(
-                                width: 10,
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () => {
+                                      Navigator.of(context).pushReplacement(
+                                          ScaleRoute(page: SignInUser()))
+                                    },
+                                    child: Text("SignIn",
+                                        style: GoogleFonts.aBeeZee(
+                                            textStyle: TextStyle(
+                                                letterSpacing: 3,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: backgroundColorIvory))),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                backgroundColorBlueGrotto)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () => {
+                                      Navigator.of(context).pushReplacement(
+                                          ScaleRoute(page: SignUpAsUser()))
+                                    },
+                                    child: Text("SignUp",
+                                        style: GoogleFonts.aBeeZee(
+                                            textStyle: TextStyle(
+                                                letterSpacing: 3,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                color: backgroundColorIvory))),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                backgroundColorBlueGrotto)),
+                                  )
+                                ],
                               ),
-                              ElevatedButton(onPressed: () => {
-                                
-                                  Navigator.of(context)
-                                       .pushReplacement(ScaleRoute(page: HomePage(user: user,)))
-                              }, child: Text("Guest",style: GoogleFonts.aBeeZee(
-                    textStyle: TextStyle(
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white
-                    )),),style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[700])),)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () => {
+                                      Navigator.of(context)
+                                          .pushReplacement(ScaleRoute(
+                                              page: HomePage(
+                                        user: user,
+                                      )))
+                                    },
+                                    child: Text(
+                                      "Guest",
+                                      style: GoogleFonts.aBeeZee(
+                                          textStyle: TextStyle(
+                                              letterSpacing: 3,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: backgroundColorIvory)),
+                                    ),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                backgroundColorBlueGrotto)),
+                                  )
+                                ],
+                              )
                             ],
                           ),
-                          Row(
-                            children: [
-                              ElevatedButton(onPressed: () => {
-                                  Navigator.of(context)
-                                       .pushReplacement(ScaleRoute(page: SignInUser()))
-                              }, child: Text("SignIn",style:GoogleFonts.aBeeZee(
-                    textStyle: TextStyle(
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white
-                    ))),style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[700])),),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              ElevatedButton(onPressed: () => {
-                                  Navigator.of(context)
-                                       .pushReplacement(ScaleRoute(page: SignUpAsUser()))
-                              }, child: Text("SignUp",style:GoogleFonts.aBeeZee(
-                    textStyle: TextStyle(
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white
-                    ))),style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[700])),)
-                            ],
-                          ),
-                          Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-                              ElevatedButton(onPressed: () => {
-                                  Navigator.of(context)
-                                       .pushReplacement(ScaleRoute(page: SignUpAsDoctor()))
-                              }, child: Text("Doc SignUp",style:GoogleFonts.aBeeZee(
-                    textStyle: TextStyle(
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white
-                    ))),style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.grey[700])),)
-          
-                          ],)
-                        ],
-                      ),]
-                    ),
+                        ]),
                   ),
                 )
               ],

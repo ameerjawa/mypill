@@ -7,6 +7,7 @@ import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/patient/patientActions/addappointment.dart';
 import 'package:mypill/user/doctor/searchForUser.dart';
 import 'package:mypill/user/patient/patientDisplays/userprofile.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 
 class DoctorAppointments extends StatefulWidget {
   var userAppointments;
@@ -23,13 +24,15 @@ class _AppointmentsState extends State<DoctorAppointments> {
   showAlertDialog(BuildContext context, String childTitle, var appointments) {
     // set up the button
     Widget CancelButton = FlatButton(
-      child: Text("Cancel"),
+       color: backgroundColorBlueGrotto,
+      child: Text("Cancel",style:TextStyle(color: backgroundColorIvory)),
       onPressed: () {
         Navigator.pop(context);
       },
     );
-    Widget deleteButton =  FlatButton(
-      child: Text("Delete"),
+    Widget deleteButton = FlatButton(
+       color: backgroundColorBlueGrotto,
+      child: Text("Delete",style:TextStyle(color: backgroundColorIvory)),
       onPressed: () async {
         appointments.removeWhere((element) => element["title"] == childTitle);
 
@@ -46,8 +49,24 @@ class _AppointmentsState extends State<DoctorAppointments> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Hi user"),
-      content: Text(childTitle),
+      title: Text("Hi Doctor",style:TextStyle(
+            fontSize: 30,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Rowdies',
+            shadows: [
+              Shadow(
+                color: backgroundColorBlueGrotto,
+                blurRadius: 10.0,
+                offset: Offset(5.0, 5.0),
+              ),
+              Shadow(
+                color: backgroundColorNeonGreen,
+                blurRadius: 10.0,
+                offset: Offset(-5.0, 5.0),
+              ),
+            ],
+          )),
+      content: Text("appointment title : ${childTitle}",style:TextStyle(color: backgroundColorBlueGrotto)),
       actions: [CancelButton, deleteButton],
     );
 
@@ -65,81 +84,94 @@ class _AppointmentsState extends State<DoctorAppointments> {
     var appointments = widget.userAppointments;
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 50.0),
-        child: Column(
-          children: [
-            Container(
-              height: 60,
-              decoration: BoxDecoration(color: Colors.blueGrey[700]),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => {
-                        Navigator.of(context).pushReplacement(ScaleRoute(
-                            page: SearchForUser(
-                          doctor: widget.doctor,
-                          users: widget.users,
-                        )))
-                      },
-                      icon: Icon(
-                        Icons.account_circle_rounded,
-                        size: 40,
-                        color: Colors.pink[50],
+      body: Container(
+        decoration: BoxDecoration(color: backgroundColorIvory),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 25.0),
+          child: Column(
+            children: [
+              Container(
+                height: 60,
+                decoration: BoxDecoration(color: appBarColorBlue),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(appBarColorBlue)),
+                        onPressed: () => {
+                          Navigator.of(context).pushReplacement(ScaleRoute(
+                              page: SearchForUser(
+                            doctor: widget.doctor,
+                            users: widget.users,
+                          )))
+                        },
+                        child: Icon(
+                          Icons.arrow_back,
+                          size: 40,
+                          color: Colors.pink[50],
+                        ),
                       ),
-                    ),
-                    Center(
-                        child: Text(
-                      "Your Appoinments",
-                      style: TextStyle(fontSize: 25),
-                    )),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Center(
+                          child: Text(
+                        "Your Appoinments",
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      )),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: ListView(
-                children: appointments.map<Widget>((strone) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 10, left: 10),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.indigoAccent, spreadRadius: 3),
-                            ],
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              '${strone["title"]}',
-                              style: TextStyle(fontSize: 30),
+              Expanded(
+                child: ListView(
+                  children: appointments.map<Widget>((strone) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 10, left: 10),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: backgroundColorNeonGreen,
+                                    spreadRadius: 3),
+                              ],
                             ),
-                            subtitle: Text(
-                                "time: ${strone["time"]} , location: ${strone["location"]} , Doctor ${strone["doctorName"]}"),
-                            onTap: () async {
-                              showAlertDialog(
-                                  context, strone["title"], appointments);
-                            },
+                            child: ListTile(
+                              title: Text(
+                                '${strone["title"]}',
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: backgroundColorBlueGrotto,
+                                    fontFamily: 'Rowdies'),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Text(
+                                    "time: ${strone["time"]} , location: ${strone["location"]} , Doctor ${strone["doctorName"]} \nuserEmail : ${strone['userEmail']}"),
+                              ),
+                              onTap: () async {
+                                showAlertDialog(
+                                    context, strone["title"], appointments);
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        )
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            )
-          ],
+                          SizedBox(
+                            height: 15,
+                          )
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

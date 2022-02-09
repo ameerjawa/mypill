@@ -180,7 +180,6 @@ class FireAuth {
 
     // Get data from docs and convert map to List
     final doctors = querySnapshot.docs.map((doc) => doc.data()).toList();
-
     return doctors;
   }
 

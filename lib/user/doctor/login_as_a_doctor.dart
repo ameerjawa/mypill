@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
@@ -24,9 +25,11 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login As Doctor"),
+        backgroundColor: appBarColorBlue,
+        title: Text("SignIn As Doctor"),
         actions: [
           ElevatedButton(
+            style:ButtonStyle(backgroundColor: MaterialStateProperty.all(appBarColorBlue)),
               onPressed: () => {
                     Navigator.of(context)
                         .pushReplacement(ScaleRoute(page: MainPage()))
@@ -37,13 +40,15 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
         ],
       ),
       body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(color: backgroundColorIvory),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
-                  height: 180,
+                  height: 100,
                 ),
                 TextFormField(
                   validator: (value) {
@@ -57,7 +62,7 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
                   controller: emailController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -81,7 +86,7 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
                   controller: doctorIdController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -94,6 +99,7 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
                   height: 30,
                 ),
                 TextFormField(
+                  obscureText: true,
                   validator: (value) {
                     if (value != null) {
                       if (value.isEmpty) {
@@ -105,7 +111,7 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
                   controller: passwordController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -120,7 +126,7 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
                 Container(
                     width: 300,
                     child: ElevatedButton(
-                        style: ButtonStyle(),
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(backgroundColorBlueGrotto)),
                         onPressed: () async {
                           if (emailController.text != null &&
                               passwordController.text != null) {
@@ -152,7 +158,7 @@ class _Login_As_A_DoctorState extends State<Login_As_A_Doctor> {
                                 "cant login if email or password are empty");
                           }
                         },
-                        child: Text("login")))
+                        child: Text("login",style:TextStyle(color: backgroundColorIvory,fontSize: 18))))
               ],
             ),
           ),

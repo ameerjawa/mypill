@@ -5,6 +5,7 @@ import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/backend/googleApi/googleSignIn.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 
 import '../main_page.dart';
 import 'doctor_appointments.dart';
@@ -69,11 +70,12 @@ class SearchForUserState extends State<SearchForUser> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:appBarColorBlue ,
         title: Text("Hi D'r ${widget.doctor['doctorName']}"),
         actions: [
           ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.grey)),
+                backgroundColor: MaterialStateProperty.all(appBarColorBlue)),
             onPressed: () async {
               var doctor_appointments = await FireAuth.getDoctorAppointments(
                   widget.doctor['doctorName']);
@@ -92,7 +94,7 @@ class SearchForUserState extends State<SearchForUser> {
           ),
           ElevatedButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.red)),
+                backgroundColor: MaterialStateProperty.all(appBarColorBlue)),
             onPressed: () async {
               await FireAuth.userSignOutAuth();
 
@@ -104,12 +106,13 @@ class SearchForUserState extends State<SearchForUser> {
         ],
       ),
       body: Container(
+        decoration: BoxDecoration(color: backgroundColorIvory),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               Container(
-                decoration: BoxDecoration(color: Colors.blueGrey),
+                decoration: BoxDecoration(color:backgroundColorIvory ),
                 height: 80,
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
@@ -125,7 +128,7 @@ class SearchForUserState extends State<SearchForUser> {
                         SizedBox(
                           width: 10,
                         ),
-                        Icon(Icons.search),
+                        Icon(Icons.search,color: backgroundColorNeonGreen,),
                         SizedBox(
                           width: 20,
                         ),
@@ -141,7 +144,7 @@ class SearchForUserState extends State<SearchForUser> {
                         ),
                         Icon(
                           Icons.mic_none_sharp,
-                          color: Colors.black,
+                          color:backgroundColorNeonGreen,
                         ),
                         SizedBox(
                           width: 10,
@@ -159,11 +162,11 @@ class SearchForUserState extends State<SearchForUser> {
                       decoration: BoxDecoration(
                           border: Border(
                               top: BorderSide(
-                                  color: Colors.blueGrey, width: 1.0))),
+                                  color: backgroundColorNeonGreen, width: 1.0))),
                       child: ListTile(
                         title: Text(
                           strone["username"],
-                          style: TextStyle(fontSize: 30),
+                          style: TextStyle(fontSize: 30,color: backgroundColorBlueGrotto,fontFamily:'Rowdies' ),
                         ),
                         subtitle: Text(strone["userPhoneNumber"] != null
                             ? strone["userPhoneNumber"]
@@ -187,8 +190,8 @@ class SearchForUserState extends State<SearchForUser> {
   showAlertDialog(BuildContext context, var userData) {
     // set up the button
     Widget okButton = FlatButton(
-      color: Colors.purple[800],
-      child: Text("OK"),
+      color: backgroundColorBlueGrotto,
+      child: Text("OK",style:TextStyle(color: backgroundColorIvory)),
       onPressed: () {
         Navigator.pop(context);
       },
@@ -214,14 +217,15 @@ class SearchForUserState extends State<SearchForUser> {
           style: TextStyle(
             fontSize: 30,
             fontStyle: FontStyle.italic,
+            fontFamily: 'Rowdies',
             shadows: [
               Shadow(
-                color: Colors.blue,
+                color: backgroundColorBlueGrotto,
                 blurRadius: 10.0,
                 offset: Offset(5.0, 5.0),
               ),
               Shadow(
-                color: Colors.red,
+                color: backgroundColorNeonGreen,
                 blurRadius: 10.0,
                 offset: Offset(-5.0, 5.0),
               ),
@@ -237,7 +241,7 @@ class SearchForUserState extends State<SearchForUser> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Username : ${userData["username"]}"),
+                Text("Username : ${userData["username"]}",style:TextStyle(color: backgroundColorBlueGrotto)),
               ],
             ),
 
@@ -245,7 +249,7 @@ class SearchForUserState extends State<SearchForUser> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("user Email : ${userData["userEmail"]}"),
+                Text("user Email : ${userData["userEmail"]}",style:TextStyle(color: backgroundColorBlueGrotto)),
               ],
             ),
             SizedBox(height: 10),
@@ -253,7 +257,7 @@ class SearchForUserState extends State<SearchForUser> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                    "user phone number : ${userData["userPhoneNumber"] != null ? userData["userPhoneNumber"] : "none"}"),
+                    "user phone number : ${userData["userPhoneNumber"] != null ? userData["userPhoneNumber"] : "none"}",style:TextStyle(color: backgroundColorBlueGrotto)),
               ],
             ),
 
@@ -261,11 +265,11 @@ class SearchForUserState extends State<SearchForUser> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("user pills :  "),
+                Text("user pills :  ",style:TextStyle(color: backgroundColorBlueGrotto)),
                 SizedBox(
                   width: 10,
                 ),
-                Text(pillsString)
+                Text(pillsString,style:TextStyle(color: backgroundColorBlueGrotto))
               ],
             )
             //  SizedBox(height:10),
