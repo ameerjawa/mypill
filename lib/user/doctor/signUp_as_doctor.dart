@@ -5,6 +5,8 @@ import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/doctor/login_as_a_doctor.dart';
+import 'package:mypill/constants/ColorsHex.dart';
+
 
 import '../main_page.dart';
 
@@ -26,9 +28,11 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: appBarColorBlue,
         title: Text("Sign Up As Doctor"),
         actions: [
           ElevatedButton(
+            style: ButtonStyle(backgroundColor:MaterialStateProperty.all(appBarColorBlue)),
               onPressed: () => {
                     Navigator.of(context)
                         .pushReplacement(ScaleRoute(page: MainPage()))
@@ -59,7 +63,7 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
                   controller: emailController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -83,7 +87,7 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
                   controller: doctorIdController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -107,7 +111,7 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
                   controller: passwordController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -131,7 +135,7 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
                   controller: phoneNumberController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -155,7 +159,7 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
                   controller: doctorNameController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -170,7 +174,7 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
                 Container(
                     width: 300,
                     child: ElevatedButton(
-                        style: ButtonStyle(),
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(backgroundColorBlueGrotto)),
                         onPressed: () async {
                           if (emailController.text != null &&
                               passwordController.text != null) {
@@ -199,7 +203,7 @@ class SignUpAsDoctorState extends State<SignUpAsDoctor> {
                                 "cant login if email or password are empty");
                           }
                         },
-                        child: Text("SignUp")))
+                        child: Text("SignUp",style: TextStyle(color: backgroundColorIvory),)))
               ],
             ),
           ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
@@ -33,7 +34,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: backgroundColorIvory);
   var now = new DateTime.now();
   var formatter = new DateFormat('yyyy-MM-dd');
 
@@ -48,13 +49,14 @@ class _HomePageState extends State<HomePage> {
   showAlertDialog(BuildContext context, String childTitle, var pills) {
     // set up the button
     Widget CancelButton = FlatButton(
-      child: Text("Cancel"),
-      onPressed: () {
+ color: backgroundColorBlueGrotto,
+      child: Text("Cancel",style:TextStyle(color: backgroundColorIvory)),      onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget DeleteButton = FlatButton(
-      child: Text("Delete"),
+       color: backgroundColorBlueGrotto,
+      child: Text("Delete",style:TextStyle(color: backgroundColorIvory)),
       onPressed: () async {
         pills.removeWhere((element) => element["pillName"] == childTitle);
 
@@ -77,8 +79,24 @@ class _HomePageState extends State<HomePage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Hi user"),
-      content: Text(childTitle),
+      title: Text("Hi user",style: TextStyle(
+            fontSize: 30,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Rowdies',
+            shadows: [
+              Shadow(
+                color: backgroundColorBlueGrotto,
+                blurRadius: 10.0,
+                offset: Offset(5.0, 5.0),
+              ),
+              Shadow(
+                color: backgroundColorNeonGreen,
+                blurRadius: 10.0,
+                offset: Offset(-5.0, 5.0),
+              ),
+            ],
+          ),),
+      content: Text(childTitle,style:TextStyle(color: backgroundColorBlueGrotto)),
       actions: [CancelButton, DeleteButton],
     );
 
@@ -135,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.grey[400],
                       ),
                       child: ElevatedButton(
-                          style: ButtonStyle(),
+                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(backgroundColorBlueGrotto)),
                           onPressed: () async {
                             var globalpills =
                                 await FireAuth.getAllPillsFromGlobalListFireBase();
@@ -147,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                                     globalList: globalpills,
                                     userPillsFromDb: widget.userPillsFromDb)));
                           },
-                          child: Text("add Medicine")))),
+                          child: Text("add Medicine",style: TextStyle(color: backgroundColorIvory),)))),
             ),
           ],
         ),
@@ -170,27 +188,39 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                   itemCount: userPills.length,
                   itemBuilder: (strone, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          border: Border(
-                              top: BorderSide(
-                                  color: Colors.blueGrey, width: 1.0))),
-                      child: ListTile(
-                        title: Text(
-                          userPills[index]["pillName"] != null
-                              ? userPills[index]["pillName"]
-                              : "",
-                          style: TextStyle(fontSize: 30),
+                    return Column(
+                      children:[ Padding(
+                        padding: const EdgeInsets.only(left: 5,right:5),
+                        child: Container(
+                          decoration:BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: backgroundColorNeonGreen,
+                                        spreadRadius: 3),
+                                  ],
+                                ),
+                          child: ListTile(
+                            title: Text(
+                              userPills[index]["pillName"] != null
+                                  ? userPills[index]["pillName"]
+                                  : "",
+                              style:  TextStyle(
+                                      fontSize: 30,
+                                      color: backgroundColorBlueGrotto,
+                                      fontFamily: 'Rowdies',fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              " ${userPills[index]["description"] != null ? userPills[index]["description"] : ""} - Time > ${userPills[index]["time"] != null ? userPills[index]["time"] : ""}",
+                            ),
+                            onTap: () async {
+                              showAlertDialog(
+                                  context, userPills[index]["pillName"], userPills);
+                            },
+                          ),
                         ),
-                        subtitle: Text(
-                          " ${userPills[index]["description"] != null ? userPills[index]["description"] : ""} - Time > ${userPills[index]["time"] != null ? userPills[index]["time"] : ""}",
-                        ),
-                        onTap: () async {
-                          showAlertDialog(
-                              context, userPills[index]["pillName"], userPills);
-                        },
-                      ),
+                      ),SizedBox(height: 10,)],
                     );
                   }),
             ),
@@ -204,13 +234,13 @@ class _HomePageState extends State<HomePage> {
     ];
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 50.0),
+        padding: const EdgeInsets.only(top: 25.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
                 height: 60,
-                decoration: BoxDecoration(color: Colors.blueGrey[700]),
+                decoration: BoxDecoration(color: appBarColorBlue),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -225,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                         icon: Icon(
                           Icons.account_circle_rounded,
                           size: 40,
-                          color: Colors.pink[50],
+                          color: backgroundColorNeonGreen,
                         ),
                       ),
                       Text(
@@ -244,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(
                             Icons.add_circle,
                             size: 40,
-                            color: Colors.pink[50],
+                            color: backgroundColorNeonGreen,
                           ))
                     ],
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,7 +284,7 @@ class _HomePageState extends State<HomePage> {
               SingleChildScrollView(
                 child: Container(
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(color: Colors.blueGrey[900]),
+                    decoration: BoxDecoration(),
                     child: _widgetOptions.elementAt(_selectedIndex)),
               )
             ],
@@ -262,6 +292,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -277,7 +308,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: backgroundColorNeonGreen,
         onTap: _onItemTapped,
       ),
     );
@@ -358,14 +389,14 @@ class MoreSettings extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed: () => {},
-                          icon: Icon(Icons.calendar_today_outlined)),
+                          icon: Icon(Icons.calendar_today_outlined,color: backgroundColorNeonGreen,)),
                       SizedBox(
                         width: 24,
                       ),
                       Text(
                         "Appointment",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
+                            fontSize: 18, fontWeight: FontWeight.w600,fontFamily: 'Rowdies'),
                       )
                     ],
                   ),
@@ -398,13 +429,13 @@ class MoreSettings extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed: () => {},
-                          icon: Icon(Icons.person_pin_outlined)),
+                          icon: Icon(Icons.person_pin_outlined,color: backgroundColorNeonGreen)),
                       SizedBox(
                         width: 24,
                       ),
                       Text("Personal Information",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600))
+                              fontSize: 18, fontWeight: FontWeight.w600,fontFamily: 'Rowdies'))
                     ],
                   ),
                 ),
@@ -436,13 +467,13 @@ class MoreSettings extends StatelessWidget {
                     children: [
                       IconButton(
                           onPressed: () => {},
-                          icon: Icon(Icons.change_circle_rounded)),
+                          icon: Icon(Icons.change_circle_rounded,color: backgroundColorNeonGreen)),
                       SizedBox(
                         width: 24,
                       ),
                       Text("Change Password",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600))
+                              fontSize: 18, fontWeight: FontWeight.w600,fontFamily: 'Rowdies'))
                     ],
                   ),
                 ),

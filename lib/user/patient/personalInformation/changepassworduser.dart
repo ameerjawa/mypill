@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/patient/patientDisplays/userprofile.dart';
 
@@ -30,12 +31,12 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
+        padding: const EdgeInsets.only(top: 22.0),
         child: SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color: Colors.blueGrey,
+            color: appBarColorBlue,
             child: Column(
               children: [
                 Row(
@@ -70,14 +71,14 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
                             children: [
                               IconButton(
                                   onPressed: () => {},
-                                  icon: Icon(Icons.change_circle_rounded)),
+                                  icon: Icon(Icons.change_circle_rounded,color: backgroundColorNeonGreen,)),
                               SizedBox(
                                 width: 20,
                               ),
                               Text("Change Password",
                                   style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.w600))
+                                      fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                             ],
                           ),
                         ),
@@ -140,7 +141,7 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              Colors.blueGrey)),
+                                              backgroundColorBlueGrotto)),
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
                                       widget.user
@@ -163,7 +164,7 @@ class _ChangePasswordUserState extends State<ChangePasswordUser> {
                                           .catchError((err) => print(err));
                                     }
                                   },
-                                  child: Text("Done"),
+                                  child: Text("Done",style: TextStyle(color: backgroundColorIvory),),
                                 ),
                               )
                             ]),

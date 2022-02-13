@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -26,13 +27,13 @@ class _PillTypesState extends State<SpecifecPillTypes> {
               Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
-                  color: Colors.blueGrey[700],
+                  
                 ),
                 child: Column(
                   children: [
                     Container(
                       height: 60,
-                      decoration: BoxDecoration(color: Colors.white),
+                      decoration: BoxDecoration(color: appBarColorBlue),
                       child: Row(
                         children: [
                           IconButton(
@@ -45,25 +46,25 @@ class _PillTypesState extends State<SpecifecPillTypes> {
                                       userData: widget.userData,
                                     )))
                                   },
-                              icon: Icon(Icons.arrow_back)),
+                              icon: Icon(Icons.arrow_back,color: backgroundColorIvory,)),
                           SizedBox(
                             width: 120,
                           ),
                           Text(
                             "Actos",
-                            style: TextStyle(fontSize: 30),
+                            style: TextStyle(fontSize: 30,color: backgroundColorIvory),
                           )
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 100,
+                      height: 20,
                     ),
-                    Container(
-                      height: 300,
+                    Expanded(
+                     
                       child: StaggeredGridView.countBuilder(
                           crossAxisCount: 2,
-                          itemCount: 3,
+                          itemCount: 7,
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
                           itemBuilder: (context, index) {
@@ -75,7 +76,7 @@ class _PillTypesState extends State<SpecifecPillTypes> {
                                   height: 150,
                                   decoration: BoxDecoration(
                                     border: Border.all(
-                                        width: 1.4, color: Colors.black),
+                                        width: 1.4, color: backgroundColorNeonGreen),
                                     borderRadius:
                                         BorderRadius.circular(8 * 0.5),
                                   ),
@@ -111,8 +112,9 @@ class _PillTypesState extends State<SpecifecPillTypes> {
                                               MainAxisAlignment.center,
                                           children: [
                                             ElevatedButton(
+                                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(backgroundColorBlueGrotto)),
                                                 onPressed: () => {},
-                                                child: Text("ok"))
+                                                child: Text("ok",style: TextStyle(color: backgroundColorIvory),))
                                           ],
                                         )
                                       ],

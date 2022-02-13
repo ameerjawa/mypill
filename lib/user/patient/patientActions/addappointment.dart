@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
@@ -10,8 +11,10 @@ class AddAppointment extends StatefulWidget {
   final doctors;
   final User? user;
   final userAppointments;
+  final userData;
+
   const AddAppointment(
-      {Key? key, this.doctors, this.user, this.userAppointments})
+      {Key? key, this.doctors, this.user, this.userAppointments,this.userData})
       : super(key: key);
 
   @override
@@ -40,11 +43,11 @@ class _AddAppointmentState extends State<AddAppointment> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
+        padding: const EdgeInsets.only(top: 23.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Colors.blueGrey,
+          color: appBarColorBlue,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -56,11 +59,13 @@ class _AddAppointmentState extends State<AddAppointment> {
                                   page: Appointments(
                                 user: widget.user,
                                 userAppointments: widget.userAppointments,
+                                userData: widget.userData,
                               )))
                             },
                         icon: Icon(
                           Icons.arrow_back,
                           size: 30,
+                          color: backgroundColorIvory,
                         ))
                   ],
                 ),
@@ -81,14 +86,14 @@ class _AddAppointmentState extends State<AddAppointment> {
                             children: [
                               IconButton(
                                   onPressed: () => {},
-                                  icon: Icon(Icons.change_circle_rounded)),
+                                  icon: Icon(Icons.change_circle_rounded,color: backgroundColorNeonGreen,)),
                               SizedBox(
                                 width: 20,
                               ),
                               Text("Add New Appointment",
                                   style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.w600))
+                                      fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                             ],
                           ),
                         ),
@@ -191,12 +196,12 @@ class _AddAppointmentState extends State<AddAppointment> {
                             validator: (value) {},
                           ),
                           Container(
-                            height: 200,
+                            height: 120,
                             alignment: Alignment.bottomRight,
                             child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      Colors.blueGrey)),
+                                      backgroundColorBlueGrotto)),
                               onPressed: () async {
                                 if (appoinmentTitleController.text == "" ||
                                     selectedDoctor.toString() == "" ||
@@ -244,7 +249,7 @@ class _AddAppointmentState extends State<AddAppointment> {
                                                   widget.userAppointments)));
                                 }
                               },
-                              child: Text("Done"),
+                              child: Text("Done",style:TextStyle(color: backgroundColorIvory)),
                             ),
                           )
                         ]),

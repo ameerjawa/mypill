@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/guest/login_as_a_guest.dart';
 
@@ -74,6 +75,7 @@ class PillGlobalListState extends State<PillGlobalList> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: appBarColorBlue,
         actions: [
           IconButton(
               onPressed: () => {
@@ -109,7 +111,7 @@ class PillGlobalListState extends State<PillGlobalList> {
                         SizedBox(
                           width: 10,
                         ),
-                        Icon(Icons.search),
+                        Icon(Icons.search,color: backgroundColorNeonGreen),
                         SizedBox(
                           width: 20,
                         ),
@@ -122,10 +124,12 @@ class PillGlobalListState extends State<PillGlobalList> {
                                 hintText: "Search people & places",
                                 hintStyle: TextStyle()),
                           ),
+
+                          
                         ),
                         Icon(
                           Icons.mic_none_sharp,
-                          color: Colors.black,
+                          color: backgroundColorNeonGreen,
                         ),
                         SizedBox(
                           width: 10,
@@ -142,13 +146,13 @@ class PillGlobalListState extends State<PillGlobalList> {
                       decoration: BoxDecoration(
                           border: Border(
                               top: BorderSide(
-                                  color: Colors.blueGrey, width: 1.0))),
+                                  color: backgroundColorNeonGreen, width: 1.0))),
                       child: ListTile(
                         title: Text(
                           strone["pillName"],
-                          style: TextStyle(fontSize: 30),
+                          style: TextStyle(fontSize: 30,color: backgroundColorBlueGrotto),
                         ),
-                        subtitle: Text(strone["description"]),
+                        subtitle: Text(strone["description"]==""?"No Description":strone["description"]),
                         onTap: () async {
                           // keep from here TODO
 

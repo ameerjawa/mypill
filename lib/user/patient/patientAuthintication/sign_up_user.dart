@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
@@ -29,9 +30,11 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
     Future<User?> user;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:appBarColorBlue,
         title: Text("Sign Up As User"),
         actions: [
           ElevatedButton(
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(appBarColorBlue)),
               onPressed: () => {
                     Navigator.of(context)
                         .pushReplacement(ScaleRoute(page: MainPage()))
@@ -59,7 +62,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                     controller: usernameController,
                     decoration: new InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                          borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -83,7 +86,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                     controller: emailController,
                     decoration: new InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                          borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -96,6 +99,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                     height: 30,
                   ),
                   TextFormField(
+                    obscureText: true,
                     validator: (value) {
                       if (value != null) {
                         if (value.isEmpty) {
@@ -107,7 +111,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                     controller: passwordController,
                     decoration: new InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                          borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -120,6 +124,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                     height: 30,
                   ),
                   TextFormField(
+                    obscureText: true,
                     validator: (value) {
                       if (value != null) {
                         if (value.isEmpty) {
@@ -131,7 +136,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                     controller: passwordVerifyController,
                     decoration: new InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                          borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -155,7 +160,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                     controller: phonenumberController,
                     decoration: new InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 3, color: Colors.blue),
+                          borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -170,7 +175,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                   Container(
                       width: 300,
                       child: ElevatedButton(
-                          style: ButtonStyle(),
+                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(backgroundColorBlueGrotto)),
                           onPressed: () async {
                             if (passwordController.text ==
                                 passwordVerifyController.text) {
@@ -220,7 +225,7 @@ class _SignUpAsUserState extends State<SignUpAsUser> {
                               showAlertDialog(context, "Passwords Not Match!");
                             }
                           },
-                          child: Text("Sign up"))),
+                          child: Text("Sign up",style: TextStyle(color: backgroundColorIvory),))),
                   SizedBox(
                     height: 40,
                   ),

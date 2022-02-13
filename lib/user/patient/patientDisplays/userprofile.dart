@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
@@ -25,11 +26,11 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
+        padding: const EdgeInsets.only(top: 24.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Colors.blueGrey,
+          color: appBarColorBlue,
           child: Column(
             children: [
               Row(
@@ -45,6 +46,7 @@ class _UserProfileState extends State<UserProfile> {
                       icon: Icon(
                         Icons.arrow_back,
                         size: 30,
+                        color:  backgroundColorIvory,
                       ))
                 ],
               ),
@@ -55,7 +57,7 @@ class _UserProfileState extends State<UserProfile> {
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                          border: Border.all(width: 2.0, color: Colors.black),
+                          border: Border.all(width: 2.5, color:backgroundColorIvory),
                           borderRadius: BorderRadius.circular(50)),
                       child: GestureDetector(
                         child: CircleAvatar(
@@ -73,7 +75,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     Text(
                       "${widget.userData?["username"] != null ? widget.userData["username"] : 'Guest'}",
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 30,color: backgroundColorIvory),
                     ),
                     SizedBox(
                       height: 20,
@@ -117,7 +119,7 @@ class _UserProfileState extends State<UserProfile> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.change_circle_rounded)),
+                                    icon: Icon(Icons.change_circle_rounded,color: backgroundColorNeonGreen,)),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -151,7 +153,7 @@ class _UserProfileState extends State<UserProfile> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.person_pin_outlined)),
+                                    icon: Icon(Icons.person_pin_outlined,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -180,7 +182,7 @@ class _UserProfileState extends State<UserProfile> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.bluetooth)),
+                                    icon: Icon(Icons.bluetooth,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -199,7 +201,7 @@ class _UserProfileState extends State<UserProfile> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.data_saver_off)),
+                                    icon: Icon(Icons.data_saver_off,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -221,7 +223,7 @@ class _UserProfileState extends State<UserProfile> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.share)),
+                                    icon: Icon(Icons.share,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -239,14 +241,14 @@ class _UserProfileState extends State<UserProfile> {
                             child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all(Colors.red)),
+                                      MaterialStateProperty.all(backgroundColorBlueGrotto)),
                               onPressed: () async {
                                 await FireAuth.userSignOutAuth();
 
                                 Navigator.of(context).pushReplacement(
                                     ScaleRoute(page: MainPage()));
                               },
-                              child: Text("logout"),
+                              child: Text("logout",style: TextStyle(color: backgroundColorIvory),),
                             ),
                           ),
                         ),

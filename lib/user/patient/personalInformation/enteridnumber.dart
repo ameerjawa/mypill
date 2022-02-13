@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/patient/personalInformation/personalinformation.dart';
 
 class EnterIdNumber extends StatefulWidget {
   final userData;
-  const EnterIdNumber({Key? key, this.userData}) : super(key: key);
+  User? user;
+   EnterIdNumber({Key? key, this.userData,this.user}) : super(key: key);
 
   @override
   _EnterIdNumberState createState() => _EnterIdNumberState();
@@ -20,11 +23,11 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
+        padding: const EdgeInsets.only(top: 23.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Colors.blueGrey,
+          color: appBarColorBlue,
           child: Column(
             children: [
               Row(
@@ -34,6 +37,7 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page: PersonalInformation(
                               userData: widget.userData,
+                              user: widget.user,
                             )))
                           },
                       icon: Icon(
@@ -58,13 +62,19 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                         child: Row(
                           children: [
                             IconButton(
-                                onPressed: () => {}, icon: Icon(Icons.person)),
+                                onPressed: () => {},
+                                icon: Icon(
+                                  Icons.person,
+                                  color: backgroundColorNeonGreen,
+                                )),
                             SizedBox(
                               width: 20,
                             ),
                             Text("Enter Id Number",
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600))
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                    color: backgroundColorBlueGrotto))
                           ],
                         ),
                       ),
@@ -92,7 +102,7 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                             child: ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      Colors.blueGrey)),
+                                      backgroundColorBlueGrotto)),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   await FireAuth.ChangeIdNumber(
@@ -106,10 +116,13 @@ class _EnterIdNumberState extends State<EnterIdNumber> {
                                       .pushReplacement(ScaleRoute(
                                           page: PersonalInformation(
                                     userData: widget.userData,
+                                    user: widget.user,
                                   )));
                                 }
                               },
-                              child: Text("Done"),
+                              child: Text("Done",
+                                  style:
+                                      TextStyle(color: backgroundColorIvory)),
                             ),
                           )
                         ]),

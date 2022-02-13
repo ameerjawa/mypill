@@ -200,7 +200,7 @@ class SearchForUserState extends State<SearchForUser> {
     var pillsString = " ";
     if (userData["userPills"] != null) {
       if (userData["userPills"].length > 0) {
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < 3 && i<userData["userPills"].length; i++) {
           pillsString += "  ${i + 1}. " +
               userData["userPills"][i]["pillName"].toString() +
               "\n ";

@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mypill/constants/showAlertDialog.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/backend/googleApi/googleSignIn.dart';
 import 'package:mypill/user/guest/login_as_a_guest.dart';
 import 'package:mypill/user/main_page.dart';
+import 'package:mypill/constants/ColorsHex.dart';
+
 
 class SignInUser extends StatefulWidget {
   const SignInUser({Key? key}) : super(key: key);
@@ -23,9 +26,12 @@ class _SignInUserState extends State<SignInUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:appBarColorBlue,
         title: Text("Sign In s User"),
         actions: [
           ElevatedButton(
+
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(appBarColorBlue)),
               onPressed: () => {
                     Navigator.of(context)
                         .pushReplacement(ScaleRoute(page: MainPage()))
@@ -53,7 +59,7 @@ class _SignInUserState extends State<SignInUser> {
                   controller: emailController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -66,6 +72,7 @@ class _SignInUserState extends State<SignInUser> {
                   height: 30,
                 ),
                 TextFormField(
+                  obscureText: true,
                   validator: (value) {
                     if (value != null) {
                       if (value.isEmpty) {
@@ -77,7 +84,7 @@ class _SignInUserState extends State<SignInUser> {
                   controller: passwordController,
                   decoration: new InputDecoration(
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 3, color: Colors.blue),
+                        borderSide: BorderSide(width: 3, color: backgroundColorNeonGreen),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -92,7 +99,7 @@ class _SignInUserState extends State<SignInUser> {
                 Container(
                     width: 300,
                     child: ElevatedButton(
-                        style: ButtonStyle(),
+                        style: ButtonStyle(backgroundColor:MaterialStateProperty.all(backgroundColorBlueGrotto)),
                         onPressed: () async {
                           if (emailController.text != null &&
                               passwordController.text != null) {
@@ -130,12 +137,12 @@ class _SignInUserState extends State<SignInUser> {
                                 "cant login if email or password are empty");
                           }
                         },
-                        child: Text("login"))),
+                        child: Text("login",style:TextStyle(color: backgroundColorIvory)))),
                 SizedBox(
                   height: 40,
                 ),
                 Center(
-                  child: Text("OR"),
+                  child: Text("OR",style:GoogleFonts.luckiestGuy(fontSize: 20)),
                 ),
                 SizedBox(
                   height: 40,
@@ -144,7 +151,7 @@ class _SignInUserState extends State<SignInUser> {
                 Container(
                     width: 200,
                     child: ElevatedButton(
-                        style: ButtonStyle(),
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(backgroundColorBlueGrotto)),
                         onPressed: () async {
                           User? user = await signInWithGoogle();
 
@@ -181,7 +188,7 @@ class _SignInUserState extends State<SignInUser> {
                             showAlertDialog(context, "something went wrong");
                           }
                         },
-                        child: Text("login with google"))),
+                        child: Text("login with google",style:TextStyle(color: backgroundColorIvory)))),
                 SizedBox(
                   height: 20,
                 ),

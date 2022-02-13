@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/patient/personalInformation/changeusername.dart';
 import 'package:mypill/user/patient/personalInformation/enterdoctorname.dart';
@@ -26,11 +27,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
+        padding: const EdgeInsets.only(top: 23.0),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Colors.blueGrey,
+          color: appBarColorBlue,
           child: Column(
             children: [
               Row(
@@ -66,7 +67,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           children: [
                             Text("Personal Information",
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600))
+                                    fontSize: 18, fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                           ],
                         ),
                       ),
@@ -79,6 +80,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page: ChangeUserName(
                               userData: widget.userData,
+                              user:widget.user
                             )))
                           },
                           child: Container(
@@ -89,14 +91,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.person)),
+                                    icon: Icon(Icons.person,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
                                 Text("Change Username",
                                     style: TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w600))
+                                        fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                               ],
                             ),
                           ),
@@ -106,6 +108,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page: EnterIdNumber(
                               userData: widget.userData,
+                              user: widget.user,
                             )))
                           },
                           child: Container(
@@ -116,14 +119,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.person)),
+                                    icon: Icon(Icons.person,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
                                 Text("Enter Id Number",
                                     style: TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w600))
+                                        fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                               ],
                             ),
                           ),
@@ -133,6 +136,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page: EnterHeightAndWeight(
                               userData: widget.userData,
+                              user:widget.user
                             )))
                           },
                           child: Container(
@@ -142,14 +146,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             child: Row(
                               children: [
                                 IconButton(
-                                    onPressed: () => {}, icon: Icon(Icons.add)),
+                                    onPressed: () => {}, icon: Icon(Icons.add,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
-                                Text("height & width",
+                                Text("height & Weight",
                                     style: TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w600))
+                                        fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                               ],
                             ),
                           ),
@@ -178,14 +182,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.date_range)),
+                                    icon: Icon(Icons.date_range,color: backgroundColorNeonGreen)),
                                 SizedBox(
                                   width: 20,
                                 ),
                                 Text("Birth Date",
                                     style: TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w600))
+                                        fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                               ],
                             ),
                           ),
@@ -194,7 +198,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           onTap: () => {
                             Navigator.of(context).pushReplacement(ScaleRoute(
                                 page:
-                                    EnterDoctorName(userData: widget.userData)))
+                                    EnterDoctorName(userData: widget.userData,user: widget.user,)))
                           },
                           child: Container(
                             height: 65,
@@ -202,14 +206,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               children: [
                                 IconButton(
                                     onPressed: () => {},
-                                    icon: Icon(Icons.person)),
+                                    icon: Icon(Icons.person,color: backgroundColorNeonGreen,)),
                                 SizedBox(
                                   width: 20,
                                 ),
                                 Text("My Doctor",
                                     style: TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w600))
+                                        fontWeight: FontWeight.w600,color: backgroundColorBlueGrotto))
                               ],
                             ),
                           ),

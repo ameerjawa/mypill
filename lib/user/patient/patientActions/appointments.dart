@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mypill/backend/fireBase/fire-auth.dart';
+import 'package:mypill/constants/ColorsHex.dart';
 import 'package:mypill/routes/pageRouter.dart';
 import 'package:mypill/user/patient/patientActions/addappointment.dart';
 import 'package:mypill/user/patient/patientDisplays/userprofile.dart';
@@ -22,13 +23,18 @@ class _AppointmentsState extends State<Appointments> {
   showAlertDialog(BuildContext context, String childTitle, var appointments) {
     // set up the button
     Widget CancelButton = FlatButton(
-      child: Text("Cancel"),
+    color: backgroundColorBlueGrotto,
+
+      child: Text("Cancel",style:TextStyle(color: backgroundColorIvory)),
       onPressed: () {
         Navigator.pop(context);
       },
     );
     Widget DeleteButton = FlatButton(
-      child: Text("Delete"),
+             color: backgroundColorBlueGrotto,
+
+      
+      child: Text("Delete",style:TextStyle(color: backgroundColorIvory)),
       onPressed: () async {
         appointments.removeWhere((element) => element["title"] == childTitle);
 
@@ -47,8 +53,24 @@ class _AppointmentsState extends State<Appointments> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Hi user"),
-      content: Text(childTitle),
+      title: Text("Hi user",style:TextStyle(
+            fontSize: 30,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Rowdies',
+            shadows: [
+              Shadow(
+                color: backgroundColorBlueGrotto,
+                blurRadius: 10.0,
+                offset: Offset(5.0, 5.0),
+              ),
+              Shadow(
+                color: backgroundColorNeonGreen,
+                blurRadius: 10.0,
+                offset: Offset(-5.0, 5.0),
+              ),
+            ],
+          )),
+      content: Text(childTitle,style:TextStyle(color: backgroundColorBlueGrotto)),
       actions: [CancelButton, DeleteButton],
     );
 
@@ -68,12 +90,12 @@ class _AppointmentsState extends State<Appointments> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 50.0),
+        padding: const EdgeInsets.only(top: 20.0),
         child: Column(
           children: [
             Container(
               height: 60,
-              decoration: BoxDecoration(color: Colors.blueGrey[700]),
+              decoration: BoxDecoration(color: appBarColorBlue),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -89,7 +111,7 @@ class _AppointmentsState extends State<Appointments> {
                       icon: Icon(
                         Icons.account_circle_rounded,
                         size: 40,
-                        color: Colors.pink[50],
+                        color: backgroundColorNeonGreen,
                       ),
                     ),
                     Center(
@@ -105,12 +127,12 @@ class _AppointmentsState extends State<Appointments> {
                               page: AddAppointment(
                                   doctors: doctors,
                                   user: widget.user,
-                                  userAppointments: widget.userAppointments)));
+                                  userAppointments: widget.userAppointments,userData:widget.userData)));
                         },
                         icon: Icon(
                           Icons.add_circle,
                           size: 40,
-                          color: Colors.pink[50],
+                          color: backgroundColorNeonGreen
                         ))
                   ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -131,13 +153,13 @@ class _AppointmentsState extends State<Appointments> {
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.indigoAccent, spreadRadius: 3),
+                                  color: backgroundColorNeonGreen, spreadRadius: 3),
                             ],
                           ),
                           child: ListTile(
                             title: Text(
                               '${strone["title"]}',
-                              style: TextStyle(fontSize: 30),
+                              style: TextStyle(fontSize: 30,color: backgroundColorBlueGrotto,fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(
                                 "time: ${strone["time"]} , location: ${strone["location"]} , Doctor ${strone["doctorName"]}"),
